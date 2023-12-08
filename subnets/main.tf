@@ -23,9 +23,7 @@ resource "aws_route_table" "example" {
   vpc_id = aws_vpc.main.id
   for_each = var.subnets
 
-  route {
-
-  }
+  route = []
 
   tags = {
     Name = each.value["name"]
