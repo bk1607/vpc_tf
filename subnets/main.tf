@@ -22,12 +22,12 @@ resource "aws_subnet" "main" {
 resource "aws_route_table" "example" {
   vpc_id = aws_vpc.main.id
   for_each = var.subnets
-  sub_net_name = each.value["name"]
+
   route {
 
   }
 
   tags = {
-    Name = sub_net_name-route_table
+    Name = each.value["name"]
   }
 }
