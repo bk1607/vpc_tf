@@ -39,7 +39,7 @@ resource "aws_route_table" "example" {
     cidr_block = "172.31.0.0/16"
   }
 
-  tags = {
-    Name = "main_route_table"
-  }
+  tags = merge(
+    var.tags,
+    { Name = "main_route_table" }
 }

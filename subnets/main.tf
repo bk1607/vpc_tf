@@ -26,6 +26,13 @@ resource "aws_route_table" "example" {
   route = []
 
   tags = {
-    Name = each.value["name"]
+    Name = "${each.value["name"]}-route_table"
   }
+}
+
+# associate route tables to respective subnets
+resource "aws_route_table_association" "a" {
+  for_each = var.subnets
+  subnet_id      = aws_subnet.main.id
+  route_table_id = aws_route_table.example.id
 }
