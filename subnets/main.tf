@@ -33,6 +33,6 @@ resource "aws_route_table" "example" {
 # associate route tables to respective subnets
 resource "aws_route_table_association" "a" {
   for_each = var.subnets
-  subnet_id      = aws_subnet.main[each.value["name"]].id
-  route_table_id = aws_route_table.example[each.value["name"]].id
+  subnet_id      = lookup(lookup(aws_subnet.main, [each.value["name"]], null), "id", null)
+  route_table_id = lookup(lookup(aws_route_table.example, [each.value["name"]], null), "id", null )
 }
