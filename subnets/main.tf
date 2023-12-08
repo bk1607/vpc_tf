@@ -24,7 +24,7 @@ resource "aws_route_table" "example" {
   for_each = var.subnets
   sub_net_name = each.value["name"]
   route {
-    
+
   }
 
   tags = {
