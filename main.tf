@@ -13,6 +13,33 @@ resource "aws_vpc_peering_connection" "test_peering" {
   auto_accept   = true
 
   tags = {
-    Name = "VPC Peering between main amd default"
+    Name = "VPC Peering between main and default"
+  }
+}
+
+# to create subnet for main vpc
+resource "aws_subnet" "main" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.0.0.0/24"
+
+  tags = {
+    Name = "Main-subnet-01"
+  }
+}
+
+# to configure routes in route table
+resource "aws_route_table" "example" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "172.31.0.0/16"
+    vpc_peering_connection_id = aws_vpc_peering_connection.test_peering.id
+  }
+  route {
+    cidr_block = "172.31.0.0/16"
+  }
+
+  tags = {
+    Name = "main_route_table"
   }
 }
