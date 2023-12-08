@@ -36,3 +36,9 @@ resource "aws_route_table_association" "a" {
   subnet_id      = aws_subnet.main[each.value["name"]].id
   route_table_id = aws_route_table.example[each.value["name"]].id
 }
+
+output "debug_output" {
+  value = {
+    subnet_name = each.value["name"]
+  }
+}
