@@ -28,6 +28,6 @@ resource "aws_route_table" "example" {
   }
 
   tags = {
-    Name = "${sub_net_name}-route_table"
+    Name = sub_net_name-route_table
   }
 }
