@@ -18,6 +18,28 @@ resource "aws_subnet" "pub_sub" {
   }
 }
 
+# to create nat gateway
+
+resource "aws_eip" "nat_eip" {
+  for_each = var.public_subnets
+  domain   = "vpc"
+
+  tags = {
+    Name = "${each.value["name"]}-eip"
+  }
+}
+
+resource "aws_nat_gateway" "example" {
+  for_each = var.public_subnets
+  allocation_id = aws_eip.nat_eip[each.key].id
+  subnet_id     = aws_subnet.pub_sub[each.key].id
+
+  tags = {
+    Name = "${each.value["name"]}-nat"
+  }
+
+
+}
 #to create private subnets
 resource "aws_subnet" "pri_sub" {
   vpc_id     = aws_vpc.main.id
