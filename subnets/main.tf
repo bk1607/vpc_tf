@@ -19,7 +19,7 @@ resource "aws_subnet" "pub_sub" {
 }
 
 # to create nat gateway
-
+# to create elastic ip
 resource "aws_eip" "nat_eip" {
   for_each = var.public_subnets
   domain   = "vpc"
@@ -29,7 +29,7 @@ resource "aws_eip" "nat_eip" {
   }
 }
 
-resource "aws_nat_gateway" "example" {
+resource "aws_nat_gateway" "nat_gateways" {
   for_each = var.public_subnets
   allocation_id = aws_eip.nat_eip[each.key].id
   subnet_id     = aws_subnet.pub_sub[each.key].id
@@ -40,6 +40,10 @@ resource "aws_nat_gateway" "example" {
 
 
 }
+
+#attach nat gateway to the private subnets in their respective availability zones
+
+
 #to create private subnets
 resource "aws_subnet" "pri_sub" {
   vpc_id     = aws_vpc.main.id
@@ -72,11 +76,15 @@ resource "aws_route_table" "private_route_table" {
   vpc_id = aws_vpc.main.id
   for_each = var.private_subnets
 
-  route = []
+  route = {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gateways[each.value["az"]].id
+  }
 
   tags = {
     Name = "${each.value["name"]}-route_table"
   }
+  depends_on = [aws_nat_gateway.nat_gateways]
 }
 
 # associate route tables to respective public subnets
