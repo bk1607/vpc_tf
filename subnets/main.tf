@@ -41,7 +41,7 @@ output "subnet" {
 
   value = {
 
-    sub_id = aws_subnet.main.id
+    sub_id = aws_subnet.main[values]
 
   }
 }
