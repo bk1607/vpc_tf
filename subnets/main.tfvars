@@ -1,14 +1,16 @@
-subnets = {
+public_subnets = {
   subnet-1 = {
-    name = "public_subnet_1"
+    name       = "public_subnet_1"
     cidr_block = "10.0.1.0/24"
-    az = "us-east-1a"
+    az         = "us-east-1a"
   }
   subnet-2 = {
-    name = "public_subnet_2"
+    name       = "public_subnet_2"
     cidr_block = "10.0.2.0/24"
-    az = "us-east-1b"
+    az         = "us-east-1b"
   }
+}
+private_subnets = {
   subnet-3 = {
     name = "web_private_subnet_1"
     cidr_block = "10.0.3.0/24"
