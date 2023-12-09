@@ -38,6 +38,10 @@ resource "aws_route_table" "example" {
 #}
 
 output "subnet" {
-  for_each = var.subnets
-  value = aws_subnet.main[each.value["name"]]
+
+  value = {
+
+    sub_id = aws_subnet.main.id
+
+  }
 }
