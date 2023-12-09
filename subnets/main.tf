@@ -58,14 +58,14 @@ resource "aws_route_table" "private_route_table" {
 }
 
 # associate route tables to respective public subnets
-resource "aws_route_table_association" "a" {
+resource "aws_route_table_association" "public" {
   for_each = var.public_subnets
   subnet_id      = aws_subnet.pub_sub[each.key].id
   route_table_id = aws_route_table.public_route_table[each.key].id
 }
 
 # associate route tables to respective private subnets
-resource "aws_route_table_association" "a" {
+resource "aws_route_table_association" "private" {
   for_each = var.private_subnets
   subnet_id      = aws_subnet.pri_sub[each.key].id
   route_table_id = aws_route_table.private_route_table[each.key].id
