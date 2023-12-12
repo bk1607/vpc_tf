@@ -44,13 +44,14 @@ resource "aws_nat_gateway" "nat_gateways" {
 
 }
 
-#attach nat gateway to the private subnets in their respective availability zones
+#local variable to use in nat gateway resource and for storing nat id based on availability zones
 locals {
   ngw_id = {
     for subnet_key, nat_gateway_data in aws_nat_gateway.nat_gateways :
     nat_gateway_data.tags.Az => nat_gateway_data.id
   }
 }
+
 #to create private subnets
 resource "aws_subnet" "pri_sub" {
   vpc_id     = aws_vpc.main.id
@@ -114,6 +115,22 @@ resource "aws_internet_gateway" "igw" {
 
   tags = {
     Name = "main_igw"
+  }
+}
+
+# value of default vpc
+data "aws_vpc" "default"{
+  default = true
+}
+
+#peering connection
+resource "aws_vpc_peering_connection" "vpc_peering" {
+  peer_vpc_id   = aws_vpc.main.id
+  vpc_id        = data.aws_vpc.default.id
+  auto_accept   = true
+
+  tags = {
+    Name = "VPC Peering between main and default"
   }
 }
 
