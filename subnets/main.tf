@@ -47,7 +47,7 @@ resource "aws_nat_gateway" "nat_gateways" {
 locals {
   private_subnet_to_nat_gateway = {
     for private_subnet_key, private_subnet_data in var.private_subnets :
-    private_subnet_key => aws_nat_gateway.nat_gateways[private_subnet_data["az"]].id
+    private_subnet_key => aws_nat_gateway.nat_gateways[private_subnet_key].id
   }
 }
 
