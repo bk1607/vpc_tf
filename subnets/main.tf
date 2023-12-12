@@ -39,7 +39,7 @@ resource "aws_nat_gateway" "nat_gateways" {
   tags = {
     Name = "${each.value["az"]}-nat"
   }
-
+  depends_on = [aws_subnet.pub_sub]
 
 }
 
@@ -115,4 +115,9 @@ resource "aws_internet_gateway" "igw" {
   tags = {
     Name = "main_igw"
   }
+}
+
+#output block for nat gateway
+output "ngw_output" {
+  value = aws_nat_gateway.nat_gateways
 }
