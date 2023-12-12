@@ -120,6 +120,6 @@ resource "aws_internet_gateway" "igw" {
 
 #output block for nat gateway
 output "ngw_ids" {
-  #value = [for nat_gateway in values(aws_nat_gateway.nat_gateways) : nat_gateway.tags["Az"]]
-  value = aws_eip.nat_eip
+  value = [for nat_gateway in values(aws_nat_gateway.nat_gateways.tags["Az"]) : nat_gateway]
+
 }
