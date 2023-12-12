@@ -119,7 +119,9 @@ resource "aws_internet_gateway" "igw" {
 }
 
 #output block for nat gateway
-output "ngw_ids" {
-  value = [for nat_gateway in values(aws_nat_gateway.nat_gateways.tags["Az"]) : nat_gateway]
-
+output "ngw_ids_by_az" {
+  value = {
+    for subnet_key, nat_gateway_data in aws_nat_gateway.nat_gateways :
+    nat_gateway_data.tags.Az => nat_gateway_data.id
+  }
 }
