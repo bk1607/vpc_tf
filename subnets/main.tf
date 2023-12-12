@@ -38,6 +38,7 @@ resource "aws_nat_gateway" "nat_gateways" {
 
   tags = {
     Name = "${each.value["az"]}-nat"
+    Az   = "${each.value["az"]}"
   }
   depends_on = [aws_subnet.pub_sub]
 
