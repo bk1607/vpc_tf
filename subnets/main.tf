@@ -118,7 +118,6 @@ resource "aws_internet_gateway" "igw" {
 }
 
 #output block for nat gateway
-output "ngw_output" {
-  for_each = var.public_subnets
-  value = aws_nat_gateway.nat_gateways[each.key].id
+output "ngw_ids" {
+  value = [for nat_gateway in values(aws_nat_gateway.nat_gateways) : nat_gateway.id]
 }
