@@ -44,12 +44,12 @@ resource "aws_nat_gateway" "nat_gateways" {
 }
 
 #attach nat gateway to the private subnets in their respective availability zones
-locals {
-  private_subnet_to_nat_gateway = {
-    for private_subnet_key, private_subnet_data in var.private_subnets :
-    private_subnet_key => aws_nat_gateway.nat_gateways[private_subnet_key].id
-  }
-}
+#locals {
+#  private_subnet_to_nat_gateway = {
+#    for private_subnet_key, private_subnet_data in var.private_subnets :
+#    private_subnet_key => aws_nat_gateway.nat_gateways[private_subnet_key].id
+#  }
+#}
 
 #to create private subnets
 resource "aws_subnet" "pri_sub" {
@@ -79,20 +79,20 @@ resource "aws_route_table" "public_route_table" {
 }
 
 # create route tables for private subnets
-resource "aws_route_table" "private_route_table" {
-  vpc_id = aws_vpc.main.id
-  for_each = var.private_subnets
-
-  route  {
-    cidr_block = "0.0.0.0/0"
-    nat_gateway_id = local.private_subnet_to_nat_gateway[each.key]
-  }
-
-  tags = {
-    Name = "${each.value["name"]}-route_table"
-  }
-  depends_on = [aws_nat_gateway.nat_gateways]
-}
+#resource "aws_route_table" "private_route_table" {
+#  vpc_id = aws_vpc.main.id
+#  for_each = var.private_subnets
+#
+#  route  {
+#    cidr_block = "0.0.0.0/0"
+#    nat_gateway_id = local.private_subnet_to_nat_gateway[each.key]
+#  }
+#
+#  tags = {
+#    Name = "${each.value["name"]}-route_table"
+#  }
+#  depends_on = [aws_nat_gateway.nat_gateways]
+#}
 
 # associate route tables to respective public subnets
 resource "aws_route_table_association" "public" {
@@ -101,12 +101,12 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public_route_table[each.key].id
 }
 
-# associate route tables to respective private subnets
-resource "aws_route_table_association" "private" {
-  for_each = var.private_subnets
-  subnet_id      = aws_subnet.pri_sub[each.key].id
-  route_table_id = aws_route_table.private_route_table[each.key].id
-}
+## associate route tables to respective private subnets
+#resource "aws_route_table_association" "private" {
+#  for_each = var.private_subnets
+#  subnet_id      = aws_subnet.pri_sub[each.key].id
+#  route_table_id = aws_route_table.private_route_table[each.key].id
+#}
 
 # creating internet gateway
 resource "aws_internet_gateway" "igw" {
