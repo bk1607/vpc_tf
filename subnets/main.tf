@@ -125,8 +125,8 @@ data "aws_vpc" "default"{
 
 #peering connection
 resource "aws_vpc_peering_connection" "vpc_peering" {
-  peer_vpc_id   = aws_vpc.main.id
-  vpc_id        = data.aws_vpc.default.id
+  peer_vpc_id   = data.aws_vpc.default.id
+  vpc_id        = aws_vpc.main.id
   auto_accept   = true
 
   tags = {
