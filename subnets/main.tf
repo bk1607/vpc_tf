@@ -144,6 +144,13 @@ resource "aws_vpc_peering_connection" "vpc_peering" {
   }
 }
 
+# adding peer route in default route table
+resource "aws_route" "r" {
+  route_table_id            = data.aws_vpc.default.main_route_table_id
+  destination_cidr_block    = data.aws_vpc.default.cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
+  
+}
 ##output block for nat gateway
 #output "ngw_ids_by_az" {
 #  value = {
