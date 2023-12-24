@@ -157,5 +157,5 @@ resource "aws_route" "r" {
 
 #subnet id output
 output "vpc_subnet_ids" {
-  value = data.aws_subnet.vpc_subnets[*].id
+  value = data.aws_subnets.vpc_subnets
 }

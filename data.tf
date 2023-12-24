@@ -25,12 +25,12 @@ data "aws_vpc" "main" {
 #  id       = each.value
 #}
 
-data "aws_subnet" "vpc_subnets" {
+data "aws_subnets" "vpc_subnets" {
   vpc_id = data.aws_vpc.main.id
 
   filter {
     name   = "tag:Name"
-    values = ["db_private_subnet_1","db_private_subnet_2"]
+    values = ["db_private_subnet_1","db_private_subnet_1"]
   }
 
   # Add more filters or adjust as needed
