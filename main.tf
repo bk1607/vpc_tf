@@ -156,6 +156,6 @@ resource "aws_route" "r" {
 #}
 
 #subnet id output
-output "vpc" {
-  value = data.aws_vpc.main
+output "subnet_cidr_blocks" {
+  value = [for s in data.aws_subnet.example : s.cidr_block]
 }
