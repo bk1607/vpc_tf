@@ -157,5 +157,5 @@ resource "aws_route" "r" {
 
 #subnet id output
 output "subnets" {
-  value = data.aws_subnet_ids.subnet_ids
+  value = data.aws_subnets.subnet_ids.ids
 }
