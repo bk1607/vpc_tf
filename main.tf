@@ -154,3 +154,8 @@ resource "aws_route" "r" {
 #    nat_gateway_data.tags.Az => nat_gateway_data.id
 #  }
 #}
+
+#subnet id output
+output "subnets" {
+  value = data.aws_subnet_ids.subnet_ids
+}
