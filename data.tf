@@ -9,7 +9,5 @@ data "aws_vpc" "main" {
   }
 }
 
-data "aws_subnets" "subnet_ids" {
-  vpc_id  = data.aws_vpc.main.id
 
 }
