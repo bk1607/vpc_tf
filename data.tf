@@ -3,11 +3,11 @@ data "aws_vpc" "default"{
 }
 
 
-data "aws_vpc" "main" {
-  tags = {
-    Name = "main"
-  }
-}
+#data "aws_vpc" "main" {
+#  tags = {
+#    Name = "main"
+#  }
+#}
 
 #data "aws_subnets" "example" {
 #  filter {
