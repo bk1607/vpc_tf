@@ -1,3 +1,3 @@
-output "vpc_id" {
-  value = aws_vpc
+output "subnets" {
+  value = data.aws_subnets.example
 }
