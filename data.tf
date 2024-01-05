@@ -3,10 +3,7 @@ data "aws_vpc" "default"{
 }
 
 data "aws_subnets" "example" {
-  filter {
-    name   = "tag:Name"
-    values = ["public_subnet_1","public_subnet_2"]
-  }
+
 
 }
 
