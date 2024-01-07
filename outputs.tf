@@ -1,3 +1,3 @@
 output "sub" {
-  value = aws_subnet.pub_sub
+  value = aws_subnet.pri_sub
 }
