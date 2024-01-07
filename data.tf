@@ -5,6 +5,7 @@ data "aws_vpc" "main"{
   tags = {
     Name = "main"
   }
+  depends_on = [aws_vpc.main]
 }
 
 data "aws_subnets" "example" {
