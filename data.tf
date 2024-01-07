@@ -19,6 +19,7 @@ data "aws_subnets" "example" {
 data "aws_subnet" "example" {
   for_each = toset(data.aws_subnets.example.ids)
   id       = each.value
+  depends_on = [aws_subnet.pub_sub,aws_subnet.pri_sub]
 }
 
 
