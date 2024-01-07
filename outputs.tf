@@ -1,3 +1,3 @@
 output "sub" {
-  value = aws_vpc["main"]
+  value = aws_vpc.main
 }
